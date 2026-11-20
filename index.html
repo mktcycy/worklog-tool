@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作日誌產生器</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="bar">
+  <h1>工作日誌產生器</h1>
+  <div class="bar-right">
+    <label class="datewrap">日期
+      <input type="date" id="theDate">
+    </label>
+    <button class="btn ghost" id="btnClear">清空</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ─────────── 左：填寫 ─────────── -->
+  <section class="pane form" id="form">
+
+    <h2 class="sec">【客戶服務】</h2>
+    <textarea id="service" rows="4" placeholder="一行一筆，例如：&#10;@j66 询问PC首页下方连结修改方式，引导说明"></textarea>
+    <p class="hint">簡體會自動轉繁體</p>
+
+    <h2 class="sec">【例行工作】</h2>
+
+    <div class="item">
+      <div class="itemhead">
+        <span class="bar-mark">▌</span>確認中晚班服務內容
+        <label class="nl"><input type="checkbox" data-nl="shift"> 內容換行</label>
+      </div>
+      <textarea id="shift" rows="2"></textarea>
+    </div>
+
+    <div class="item">
+      <div class="itemhead">
+        <span class="bar-mark">▌</span>檢查前假日與晚間站長入款
+        <label class="nl"><input type="checkbox" data-nl="deposit"> 內容換行</label>
+      </div>
+      <textarea id="deposit" rows="2" placeholder="無入款"></textarea>
+    </div>
+
+    <div class="item">
+      <div class="itemhead"><span class="bar-mark">▌</span>ACC入帳檢查</div>
+      <div class="radios">
+        <label><input type="radio" name="acc" value="ok" checked> 入款無誤</label>
+        <label><input type="radio" name="acc" value="ng"> 入款異常已回報</label>
+      </div>
+      <input type="text" id="accNote" class="hidden" placeholder="異常說明（會轉繁體）">
+    </div>
+
+    <div class="item">
+      <div class="itemhead">
+        <span class="bar-mark">▌</span>網站檢查
+        <label class="nl"><input type="checkbox" data-nl="site" checked> 內容換行</label>
+      </div>
+      <textarea id="site" rows="3"></textarea>
+    </div>
+
+    <div class="item">
+      <div class="itemhead">
+        <span class="bar-mark">▌</span>開立需求單
+        <label class="nl"><input type="checkbox" data-nl="ticket"> 內容換行</label>
+      </div>
+      <textarea id="ticket" rows="2"></textarea>
+    </div>
+
+    <div class="item">
+      <div class="itemhead"><span class="bar-mark">▌</span>網站資料抓取與檢視</div>
+
+      <div class="card">
+        <div class="cardtitle">● 正損益最多</div>
+        <div class="row3">
+          <label>廳主 @<input type="text" id="pHall" placeholder="089"></label>
+          <label>數值<input type="text" id="pVal" placeholder="765,838"></label>
+          <label>獲利率<input type="text" id="pRate" placeholder="3.46%"></label>
+        </div>
+        <label class="lbl">主要獲利<span class="raw">不轉繁體</span></label>
+        <textarea id="pWhy" rows="2" placeholder="PG电子 麻将胡了1.2、赏金大对决"></textarea>
+      </div>
+
+      <div class="negbar">
+        <span class="cardtitle">● 負損益</span>
+        <label><input type="radio" name="neg" value="yes" checked> 有</label>
+        <label><input type="radio" name="neg" value="no"> 無</label>
+        <button class="btn mini" id="btnAddNeg">＋ 新增一組</button>
+      </div>
+      <div id="negList"></div>
+    </div>
+
+    <div class="item">
+      <div class="itemhead">
+        <span class="bar-mark">▌</span>分析異常資料
+        <label class="nl"><input type="checkbox" data-nl="abnormal" checked> 內容換行</label>
+      </div>
+      <textarea id="abnormal" rows="4"></textarea>
+    </div>
+
+    <div class="item">
+      <div class="itemhead"><span class="bar-mark">▌</span>檢視案件單</div>
+      <div class="radios">
+        <label><input type="radio" name="case" value="done" checked> 完成（顯示這一行）</label>
+        <label><input type="radio" name="case" value="undone"> 未完成（不顯示）</label>
+      </div>
+    </div>
+
+    <h2 class="sec">【額外學習】</h2>
+    <textarea id="learn" rows="3" placeholder="一行一筆，前面會自動加 ●"></textarea>
+
+  </section>
+
+  <!-- ─────────── 右：預覽 ─────────── -->
+  <section class="pane out">
+    <div class="outhead">
+      <span>預覽</span>
+      <button class="btn primary" id="btnCopy">複製全文</button>
+    </div>
+    <pre id="preview"></pre>
+  </section>
+
+</main>
+
+<div class="toast" id="toast" hidden></div>
+
+<template id="negTpl">
+  <div class="card neg">
+    <div class="cardtitle">
+      <span class="negno">● 負損益</span>
+      <button class="btn mini danger negdel">刪除</button>
+    </div>
+    <div class="row3">
+      <label>廳主 @<input type="text" class="nHall" placeholder="jb"></label>
+      <label>數值<input type="text" class="nVal" placeholder="-187,325"></label>
+      <label>獲利率<input type="text" class="nRate" placeholder="-5.87%"></label>
+    </div>
+    <label class="lbl">主因<span class="raw">不轉繁體</span></label>
+    <textarea class="nWhy" rows="3" placeholder="會員 xxx 玩PP電子 免費旋轉 獲得大獎導致"></textarea>
+  </div>
+</template>
+
+<script src="dict.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

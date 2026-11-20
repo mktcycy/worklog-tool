@@ -32,7 +32,7 @@
 
     <div class="item">
       <div class="itemhead">
-        <span class="bar-mark">▌</span>確認中晚班服務內容
+        <span class="bar-mark">▌</span>確認中晚班服務內容(重點紀錄)
         <label class="nl"><input type="checkbox" data-nl="shift"> 內容換行</label>
       </div>
       <textarea id="shift" rows="2"></textarea>
@@ -49,7 +49,8 @@
     <div class="item">
       <div class="itemhead"><span class="bar-mark">▌</span>ACC入帳檢查</div>
       <div class="radios">
-        <label><input type="radio" name="acc" value="ok" checked> 入款無誤</label>
+        <label><input type="radio" name="acc" value="none" checked> 昨日無入款</label>
+        <label><input type="radio" name="acc" value="ok"> 入款無誤</label>
         <label><input type="radio" name="acc" value="ng"> 入款異常已回報</label>
       </div>
       <input type="text" id="accNote" class="hidden" placeholder="異常說明（會轉繁體）">
@@ -77,12 +78,12 @@
       <div class="card">
         <div class="cardtitle">● 正損益最多</div>
         <div class="row3">
-          <label>廳主 @<input type="text" id="pHall" placeholder="089"></label>
-          <label>數值<input type="text" id="pVal" placeholder="765,838"></label>
-          <label>獲利率<input type="text" id="pRate" placeholder="3.46%"></label>
+          <label>廳主 @<input type="text" id="pHall" placeholder="廳主後置碼"></label>
+          <label>數值<input type="text" id="pVal" placeholder="數值"></label>
+          <label>獲利率<input type="text" id="pRate" placeholder="%數"></label>
         </div>
         <label class="lbl">主要獲利<span class="raw">不轉繁體</span></label>
-        <textarea id="pWhy" rows="2" placeholder="PG电子 麻将胡了1.2、赏金大对决"></textarea>
+        <textarea id="pWhy" rows="2" placeholder="內容"></textarea>
       </div>
 
       <div class="negbar">
@@ -135,12 +136,12 @@
       <button class="btn mini danger negdel">刪除</button>
     </div>
     <div class="row3">
-      <label>廳主 @<input type="text" class="nHall" placeholder="jb"></label>
-      <label>數值<input type="text" class="nVal" placeholder="-187,325"></label>
-      <label>獲利率<input type="text" class="nRate" placeholder="-5.87%"></label>
+      <label>廳主 @<input type="text" class="nHall" placeholder="廳主後置碼"></label>
+      <label>數值<input type="text" class="nVal" placeholder="數值"></label>
+      <label>獲利率<input type="text" class="nRate" placeholder="%數"></label>
     </div>
     <label class="lbl">主因<span class="raw">不轉繁體</span></label>
-    <textarea class="nWhy" rows="3" placeholder="會員 xxx 玩PP電子 免費旋轉 獲得大獎導致"></textarea>
+    <textarea class="nWhy" rows="3" placeholder="內容"></textarea>
   </div>
 </template>
 

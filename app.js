@@ -109,12 +109,14 @@
     L.push('【例行工作】');
     var nl = function (id) { return document.querySelector('[data-nl="' + id + '"]').checked; };
 
-    L = L.concat(routine('確認中晚班服務內容', $('#shift').value, nl('shift')));
+    L = L.concat(routine('確認中晚班服務內容(重點紀錄)', $('#shift').value, nl('shift')));
     L = L.concat(routine('檢查前假日與晚間站長入款', $('#deposit').value, nl('deposit')));
 
     // ACC
     var acc = document.querySelector('input[name=acc]:checked').value;
-    if (acc === 'ok') {
+    if (acc === 'none') {
+      L.push('▌ACC入帳檢查：昨日無入款');
+    } else if (acc === 'ok') {
       L.push('▌ACC入帳檢查：入款無誤');
     } else {
       var note = zh($('#accNote').value);
@@ -199,7 +201,7 @@
   $('#btnClear').addEventListener('click', function () {
     if (!confirm('清空所有填寫內容？')) return;
     document.querySelectorAll('textarea, input[type=text]').forEach(function (el) { el.value = ''; });
-    document.querySelector('input[name=acc][value=ok]').checked = true;
+    document.querySelector('input[name=acc][value=none]').checked = true;
     document.querySelector('input[name=neg][value=yes]').checked = true;
     document.querySelector('input[name=case][value=done]').checked = true;
     $('#accNote').classList.add('hidden');

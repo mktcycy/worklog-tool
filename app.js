@@ -124,7 +124,10 @@
     }
 
     L = L.concat(routine('網站檢查', $('#site').value, nl('site')));
-    L = L.concat(routine('開立需求單', $('#ticket').value, nl('ticket')));
+    // 今日無 → 整行不輸出
+    if (document.querySelector('input[name=ticket]:checked').value === 'has') {
+      L = L.concat(routine('開立需求單', $('#ticket').value, nl('ticket')));
+    }
 
     // 網站資料抓取與檢視
     var pnl = [];
@@ -173,6 +176,9 @@
     if (e.target.name === 'acc') {
       $('#accNote').classList.toggle('hidden', e.target.value !== 'ng');
     }
+    if (e.target.name === 'ticket') {
+      $('#ticket').classList.toggle('hidden', e.target.value !== 'has');
+    }
     render();
   });
 
@@ -202,6 +208,8 @@
     if (!confirm('清空所有填寫內容？')) return;
     document.querySelectorAll('textarea, input[type=text]').forEach(function (el) { el.value = ''; });
     document.querySelector('input[name=acc][value=none]').checked = true;
+    document.querySelector('input[name=ticket][value=none]').checked = true;
+    $('#ticket').classList.add('hidden');
     document.querySelector('input[name=neg][value=yes]').checked = true;
     document.querySelector('input[name=case][value=done]').checked = true;
     $('#accNote').classList.add('hidden');

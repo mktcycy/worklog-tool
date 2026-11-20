@@ -69,7 +69,11 @@
         <span class="bar-mark">▌</span>開立需求單
         <label class="nl"><input type="checkbox" data-nl="ticket"> 內容換行</label>
       </div>
-      <textarea id="ticket" rows="2"></textarea>
+      <div class="radios">
+        <label><input type="radio" name="ticket" value="none" checked> 今日無（不顯示這一行）</label>
+        <label><input type="radio" name="ticket" value="has"> 有，填寫內容</label>
+      </div>
+      <textarea id="ticket" rows="2" class="hidden" placeholder="內容"></textarea>
     </div>
 
     <div class="item">
